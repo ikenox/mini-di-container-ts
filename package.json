@@ -1,6 +1,6 @@
 {
   "name": "mini-di-container",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A minimum, type-safe and straightforward dependency injection container for TypeScript",
   "type": "module",
   "main": "./lib/cjs/index.js",
@@ -11,7 +11,8 @@
     "build:cjs": "tsc -p tsconfig.build.json --module commonjs --outDir ./lib/cjs",
     "build:esm": "tsc -p tsconfig.build.json --module esnext --outDir ./lib/esm",
     "test": "vitest run --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "package-version": "node -p \"require('./package.json').version\""
   },
   "keywords": [
     "dependency-injection",
