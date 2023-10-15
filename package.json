@@ -1,0 +1,47 @@
+{
+  "name": "mini-di-container",
+  "version": "0.1.0",
+  "description": "A minimum, type-safe and straightforward dependency injection container for TypeScript",
+  "type": "module",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "scripts": {
+    "build": "rimraf ./lib && pnpm build:cjs && pnpm build:esm",
+    "build:cjs": "tsc -p tsconfig.build.json --module commonjs --outDir ./lib/cjs",
+    "build:esm": "tsc -p tsconfig.build.json --module esnext --outDir ./lib/esm",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "dependency-injection",
+    "dependency",
+    "injection",
+    "di-container",
+    "di",
+    "ioc",
+    "typescript"
+  ],
+  "author": "Naoto Ikeno",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "peerDependencies": {
+    "typescript": ">=5"
+  },
+  "files": [
+    "lib",
+    "src"
+  ]
+}
