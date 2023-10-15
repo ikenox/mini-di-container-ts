@@ -1,27 +1,7 @@
-# mini-di-container
+import { expect, test } from 'vitest';
+import type { Infer } from './index';
+import { scope } from './index';
 
-A minimum, type-safe and straightforward dependency injection container for TypeScript.
-
-```shell
-npm install mini-di-container
-```
-
-## Philosophy
-
-- **Typesafe:** This package provides fully typed interfaces. If there are no compilation errors, then your code runs as you expected.
-- **No annotation:** This package is NOT annotation-based DI library.
-- **Simple:** Few public interfaces and parameters. When you read the small example code below, you will know everything about this library.
-- **Plain:** Few implicit rules and no proprietary syntax. If you can read TypeScript, then you can use this library intuitively.
-
-## Key features
-
-- **Instance management:** Dependency instances are instanciated and cached per container.
-- **Lazy evaluation:** Processes are lazy as much as possible. Each dependency instances are not instantiated until it is actually used.
-- **Scope management:** You can easily achieve singleton scoped, request scoped or any scoped contaniner you want. You can also use external parameters (e.g. request object) to build your dependencies.
-
-## Usage
-
-```typescript
 // =============================================
 // 1. Define containers
 // =============================================
@@ -98,9 +78,9 @@ function requestHandler(request: Request) {
   });
 
   // Of course, you can use each dependency instances directly.
-  const logger = requestScopedContainer.logger;
-  logger.log(requestScopedContainer.config.greetingWord); // => 'Hello'
-  logger.log(requestScopedContainer.talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
+  const { logger, config, talkingService } = requestScopedContainer;
+  logger.log(config.greetingWord); // => 'Hello'
+  logger.log(talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
 
   // Anothor usage is passing the container itself to a downstream method.
   // This pattern is useful e.g. when the middreware method can't know which dependencies will be used in the downstream.
@@ -115,8 +95,23 @@ function doGreeting(
   logger.log('doGreeting is called');
   return greetingService.greet(toName);
 }
-```
 
-## License
+// =============================================
+// Tests
+// =============================================
+test('example', () => {
+  const request = {
+    headers: { get: () => 'Alice' },
+  } as unknown as Request;
 
-MIT
+  requestHandler(request);
+
+  // let messages: string[] = [];
+  // requestScope.provide({
+  //   logger: (): Logger => ({
+  //     log: (msg) => (messages = [...messages, msg]),
+  //   }),
+  // });
+  // requestHandler(request);
+  // expect(messages).toEqual(['']);
+});
