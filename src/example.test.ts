@@ -2,10 +2,6 @@ import { test } from 'vitest';
 import type { Infer } from './index';
 import { scope } from './index';
 
-// =============================================
-// 1. Define containers
-// =============================================
-
 // Your types, classes and interfaces to be managed with DI container
 interface Logger {
   log(message: string): void;
@@ -29,10 +25,10 @@ class TalkingService {
   }
 }
 
-// `scope()` defines a new container scope, here example is a singleton-scoped.
-// `provide(...)` defines builder methods of dependencies.
+// Defines a new container scope, here example is a singleton-scoped.
 const singletonScope = scope()
   .provide({
+    // builder methods of dependencies.
     logger: (): Logger => ({
       log: console.log,
     }),
@@ -44,19 +40,14 @@ const singletonScope = scope()
       new GreetingService(config),
   });
 // Instanciate singleton-scoped container.
-// Its contained dependencies are NOT instanciated yet, and it will be instanciated when actually used.
 const singletonContainer = singletonScope.instanciate({});
 
-// Define another-scoped container scope (as an example, here is a request-scoped).
-// * It's recommended to create the scope instance as singleton regardless of its scope.
-// * You can specify scope-specific external parameter (example here is `{ request: Request }`).
-// * `static(...)` method allows this container to provide other-scoped container's dependency instances.
-//   Then the merged container keeps original scope. It means that the instances managed by the singletonContainer are still singleton.
+// Define another scope. You can specify scope-specific parameter. As an example,
+// here is `{ request: Request }`.
 const requestScope = scope<{ request: Request }>()
   .static(singletonContainer)
   .provide({
     // Define request-scoped dependencies.
-    // You can use the scope-specific external parameter to build dependencies.
     talkingService: ({ greetingService }, { request }) =>
       new TalkingService(
         greetingService,
@@ -64,16 +55,14 @@ const requestScope = scope<{ request: Request }>()
       ),
   });
 
-// Request-scoped container is not instanciated yet, because it is instanciated per a request.
-
-// =============================================
-// 2. Use of the defined containers
-// =============================================
+// The request-scoped container is not instanciated yet, since it is instanciated
+// per a request.
 
 // Your request handler as an example.
 // Here assuming the request header contains `X-Greeter-Name: Alice`.
 function requestHandler(request: Request) {
-  // Instanciate request-scoped container per request, with the scope-specific external parameter.
+  // Instanciate the request-scoped container per request, with the scope-specific
+  // external parameters.
   const requestScopedContainer = requestScope.instanciate({
     request,
   });
@@ -84,8 +73,10 @@ function requestHandler(request: Request) {
   logger.log(talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
 
   // Another usage is passing the container itself to a downstream method.
-  // This pattern is useful e.g. when the middreware method can't know which dependencies will be used in the downstream.
-  logger.log(doGreeting('Carol', requestScopedContainer)); // => 'Alice said: Hello, Carol.'
+  // This pattern is useful e.g. when the middreware method can't know which
+  // dependencies will be used in the downstream.
+  logger.log(doGreeting('Carol', requestScopedContainer));
+  // => 'Alice said: Hello, Carol.'
 }
 
 type Dependencies = Infer<typeof requestScope>;

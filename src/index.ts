@@ -6,9 +6,9 @@ export class ContainerScope<
   constructor(readonly providers: Providers<Instances, Instances, ScopeArgs>) {}
 
   /**
-   * Instanciates a container that provides dependency instances.
-   * Actually, each dependency instances are NOT instanciated yet at this point.
-   * It will be instanciated when actually used.
+   * Instanciates a container that provides dependency instances. Actually, each
+   * dependency instances are NOT instanciated yet at this point. It will be
+   * instanciated when actually used.
    */
   instanciate(params: ScopeArgs): Instances {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,13 +33,16 @@ export class ContainerScope<
   }
 
   /**
-   * Merges external static instances to provide via the container.
+   * Merges external static objects (mainly other container instances) to provide
+   * via the container. It allows the container to provide other-scoped container's
+   * dependency instances together. The merged container keeps original scope.
    */
   static<P extends Record<string, unknown> & WithoutReserved<Instances>>(
     p: P
   ): ContainerScope<Instances & P, ScopeArgs> {
     const added = Object.fromEntries(
-      // Don't use `Object.entries` because it causes immediate evaluation of the passed DI container's all members
+      // Don't use `Object.entries`
+      // It causes immediate evaluation of the passed DI container's all members
       Object.keys(p).map((k) => [k, () => p[k]])
     ) as unknown as Providers<P, Instances, ScopeArgs>;
     const merged = {
@@ -98,9 +101,9 @@ export type Infer<C extends ContainerScope<Record<never, never>, never>> =
   C extends ContainerScope<infer A, never> ? A : never;
 
 /**
- * Define a new container scope.
- * Container scope is like a template, or a builder of the specific container instance.
- * It's preferable that each container scopes are defined at only once and reused throughout the process.
+ * Define a new container scope. Container scope is like a template, or a builder
+ * of the specific container instance. It's preferable that each container scopes
+ * are defined at only once and reused throughout the process.
  */
 export function scope<ScopeArgs>(): ContainerScope<
   Record<never, never>,
