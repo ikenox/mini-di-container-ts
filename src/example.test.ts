@@ -106,13 +106,4 @@ test('example', () => {
   } as unknown as Request;
 
   requestHandler(request);
-
-  // let messages: string[] = [];
-  // requestScope.provide({
-  //   logger: (): Logger => ({
-  //     log: (msg) => (messages = [...messages, msg]),
-  //   }),
-  // });
-  // requestHandler(request);
-  // expect(messages).toEqual(['']);
 });

@@ -30,4 +30,5 @@ jobs:
               args: [--frozen-lockfile, --strict-peer-dependencies]
       - run: pnpm prettier --check
       - run: pnpm eslint
+      - run: pnpm typecheck
       - run: pnpm test
