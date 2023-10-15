@@ -6,6 +6,7 @@ import { scope } from './index';
 // 1. Define containers
 // =============================================
 
+// Your types, classes and interfaces to be managed with DI container
 interface Logger {
   log(message: string): void;
 }
