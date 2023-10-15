@@ -95,11 +95,11 @@ function requestHandler(request: Request) {
 
   // Of course, you can use each dependency instances directly.
   requestScopedContainer.config.greetingWord; // => 'Hello'
-  requestScopedContainer.talkingService.talkTo('Bob'); // => 'Alice: Hello, Bob.'
+  requestScopedContainer.talkingService.talkTo('Bob'); // => 'Alice said: Hello, Bob.'
 
   // Anothor usage is passing the container itself to a downstream method.
   // This pattern is useful e.g. when the middreware method can't know which dependencies will be used in the downstream.
-  doGreeting('Carol', requestScopedContainer); // => 'Alice: Hello, Carol.'
+  doGreeting('Carol', requestScopedContainer); // => 'Alice said: Hello, Carol.'
 }
 
 type Dependencies = Infer<typeof requestScope>;
