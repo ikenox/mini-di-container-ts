@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { test } from 'vitest';
 import type { Infer } from './index';
 import { scope } from './index';
 
