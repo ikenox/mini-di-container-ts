@@ -39,7 +39,8 @@ jobs:
           export PACKAGE_VERSION="v$(pnpm --silent package-version)"
           export TAG_NAME="${{ github.ref_name }}"
           echo "tag=${TAG_NAME} package=${PACKAGE_VERSION}"
-          ([[ "$TAG_NAME" != "$PACKAGE_VERSION" ]] && echo "version unmatched" && exit 1) || (exit 0)
+          [ "$TAG_NAME" != "$PACKAGE_VERSION" ] && echo "version unmatched" && exit 1
+          exit 0
       - run: pnpm build
       - name: Create Release on GitHub
         uses: softprops/action-gh-release@v1
