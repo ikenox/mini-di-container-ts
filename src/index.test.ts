@@ -1,6 +1,6 @@
 import { test } from 'vitest';
-import type { Infer } from './index.js';
-import { scope } from './index.js';
+import type { Infer } from './index';
+import { scope } from './index';
 
 test('basic usage', ({ expect }) => {
   const scope1 = scope()
