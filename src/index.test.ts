@@ -1,4 +1,4 @@
-import { test } from 'vitest';
+import { describe, test } from 'vitest';
 import type { Infer } from './index';
 import { scope } from './index';
 
@@ -81,7 +81,7 @@ test('cache', ({ expect }) => {
 test("container instantiation processses doen't evaluate a passed another container dependency instances", ({
   expect,
 }) => {
-  const container1 = scope()
+  const container = scope()
     .provide({
       dep: () => {
         throw new Error('this code should never be called');
@@ -90,6 +90,31 @@ test("container instantiation processses doen't evaluate a passed another contai
     .instanciate({});
 
   expect(() => {
-    scope().static(container1).instanciate({});
+    scope().static(container).instanciate({});
   }).not.toThrowError();
 });
+
+describe('type-level tests', () => {
+  const testScope = scope().provide({
+    depA: () => 1,
+  });
+
+  test('`provide` function: cannot provide dependency that key already exists', () => {
+    type Arg = Parameters<typeof testScope.provide>[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const cannotOverwriteDepA: Eq<Arg['depA'], undefined> = true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const canAddOtherKey: Extends<Arg['testKey'], unknown> = true;
+  });
+
+  test('`static` function: cannot provide dependency that key already exists', () => {
+    type Arg = Parameters<typeof testScope.static>[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const cannotOverwriteDepA: Eq<Arg['depA'], undefined> = true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const canAddOtherKey: Extends<Arg['testKey'], unknown> = true;
+  });
+});
+
+type Eq<A, B> = A extends B ? (B extends A ? true : false) : false;
+type Extends<A, B> = A extends B ? true : false;
