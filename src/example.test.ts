@@ -83,7 +83,7 @@ function requestHandler(request: Request) {
   logger.log(config.greetingWord); // => 'Hello'
   logger.log(talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
 
-  // Anothor usage is passing the container itself to a downstream method.
+  // Another usage is passing the container itself to a downstream method.
   // This pattern is useful e.g. when the middreware method can't know which dependencies will be used in the downstream.
   logger.log(doGreeting('Carol', requestScopedContainer)); // => 'Alice said: Hello, Carol.'
 }
