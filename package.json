@@ -2,6 +2,16 @@
   "name": "mini-di-container",
   "version": "0.1.4",
   "description": "A minimum, type-safe and straightforward dependency injection container for TypeScript",
+  "author": "Naoto Ikeno <ikenox@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/ikenox/mini-di-container-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ikenox/mini-di-container-ts.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -25,8 +35,6 @@
     "ioc",
     "typescript"
   ],
-  "author": "Naoto Ikeno",
-  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
