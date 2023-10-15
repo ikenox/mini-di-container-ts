@@ -1,6 +1,3 @@
-/**
- * @type {import("eslint").Linter.Config}
- */
 module.exports = {
   root: true,
   extends: [
@@ -25,5 +22,11 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
-  ignorePatterns: ['*.config.js', '.eslintrc.js', 'node_modules/**', 'lib/**'],
+  ignorePatterns: [
+    '*.config.js',
+    '.eslintrc.cjs',
+    'node_modules/**',
+    'lib/**',
+    'coverage/**',
+  ],
 };
