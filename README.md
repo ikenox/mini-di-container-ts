@@ -1,3 +1,7 @@
+[![npm version](https://badge.fury.io/js/mini-di-container.svg)](https://badge.fury.io/js/mini-di-container)
+[![CI](https://github.com/ikenox/mini-di-container-ts/actions/workflows/ci.yaml/badge.svg)](https://github.com/ikenox/mini-di-container-ts/actions/workflows/ci.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # mini-di-container
 
 A minimum, type-safe and straightforward dependency injection container for TypeScript.
