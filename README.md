@@ -103,9 +103,9 @@ function requestHandler(request: Request) {
   });
 
   // Of course, you can use each dependency instances directly.
-  const logger = requestScopedContainer.logger;
-  logger.log(requestScopedContainer.config.greetingWord); // => 'Hello'
-  logger.log(requestScopedContainer.talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
+  const { logger, config, talkingService } = requestScopedContainer;
+  logger.log(config.greetingWord); // => 'Hello'
+  logger.log(talkingService.talkTo('Bob')); // => 'Alice said: Hello, Bob.'
 
   // Anothor usage is passing the container itself to a downstream method.
   // This pattern is useful e.g. when the middreware method can't know which dependencies will be used in the downstream.
