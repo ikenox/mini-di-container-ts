@@ -78,20 +78,32 @@ test('cache', ({ expect }) => {
   expect(container1.num).not.toBe(container2.num);
 });
 
-test("container instantiation processses doen't evaluate a passed another container dependency instances", ({
-  expect,
-}) => {
+describe('lazy evaluation', () => {
   const container = scope()
     .provide({
-      dep: () => {
+      depA: () => {
         throw new Error('this code should never be called');
       },
+      depB: () => 123,
     })
     .instanciate({});
 
-  expect(() => {
-    scope().static(container).instanciate({});
-  }).not.toThrowError();
+  test('dependencies are not evaluated when merged by `static` method', ({
+    expect,
+  }) => {
+    expect(() => {
+      scope().static(container).instanciate({});
+    }).not.toThrowError();
+  });
+
+  test('unspecified variable is not evaluated on object destruction', ({
+    expect,
+  }) => {
+    expect(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { depB } = container;
+    }).not.toThrowError();
+  });
 });
 
 describe('type-level tests', () => {

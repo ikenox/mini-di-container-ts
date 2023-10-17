@@ -71,6 +71,8 @@ const singletonContainer = singletonScope.instanciate({});
 // Define another scope. You can specify scope-specific parameter. As an example,
 // here is `{ request: Request }`.
 const requestScope = scope<{ request: Request }>()
+  // Provide other-scoped dependencies in this scope together
+  // Note that the merged singleton-scoped dependencies are still singleton
   .static(singletonContainer)
   .provide({
     // Define request-scoped dependencies.
