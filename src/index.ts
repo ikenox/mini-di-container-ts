@@ -35,7 +35,9 @@ export class ContainerScope<
   /**
    * Merges external static objects (mainly other container instances) to provide
    * via the container. It allows the container to provide other-scoped container's
-   * dependency instances together. The merged container keeps original scope.
+   * dependency instances together.
+   * The merged container keeps original scope, meaning that a singleton-scoped
+   * container which is merged into request-scoped keeps singletion.
    */
   static<P extends Record<string, unknown> & WithoutReserved<Instances>>(
     p: P
